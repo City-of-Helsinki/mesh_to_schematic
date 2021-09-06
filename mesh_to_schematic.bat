@@ -44,7 +44,7 @@ if exist %i_vox2schematic% (
 	goto fail
 )
 echo please wait, converting mesh to point cloud
-start cmd /k ""%i_cloudCompare%"  -AUTO_SAVE OFF -o -GLOBAL_SHIFT AUTO "%i_obj%" -SAMPLE_MESH DENSITY 100 -APPLY_TRANS "%~dp0settings\transformation_matrix.txt" -C_EXPORT_FMT PLY -NO_TIMESTAMP -SAVE_CLOUDS FILE TMP_outputfiles/point_cloud_output.ply"
+start cmd /c ""%i_cloudCompare%"  -AUTO_SAVE OFF -o -GLOBAL_SHIFT AUTO "%i_obj%" -SAMPLE_MESH DENSITY 100 -APPLY_TRANS "%~dp0settings\transformation_matrix.txt" -C_EXPORT_FMT PLY -NO_TIMESTAMP -SAVE_CLOUDS FILE TMP_outputfiles/point_cloud_output.ply"
 
 :wait
 if not exist "%~dp0TMP_outputfiles/point_cloud_output.ply" (
