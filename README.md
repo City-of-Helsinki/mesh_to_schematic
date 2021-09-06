@@ -1,3 +1,5 @@
+This has been created mainly to generate colored Minecraft models from 3D city mesh models
+
 For OBJToMinecraft to work you have to install the free open source software CloudCompare:http://www.cloudcompare.org/
 
 How to run it:
