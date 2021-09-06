@@ -1,5 +1,12 @@
 @echo off
 
+if not exist "%~dp0TMP_outputfiles" (
+	mkdir TMP_outputfiles
+)
+if not exist "%~dp0result" (
+	mkdir result
+)
+
 :a
 set /p i_obj="Enter input 3D mesh model path: "
 
