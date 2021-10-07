@@ -12,7 +12,7 @@ Run start.bat and follow the instructions.
 If you wish to generate an entire city and import it into a minecraft world, you need the URL of the dataset.
 Helsinki's 3D city mesh data sets can be found from http://3d.hel.ninja/data/mesh/. More info: https://www.hel.fi/helsinki/en/administration/information/general/3d/utilise/
 
-Also, if you choose to generate an entire city, you will have to copy a minecraft world into the mesh_to_schematic folder, and rename it "city_map". To do this, you can download a minecraft map online, or, for example, generate a superfalt map in Minecraft, and copy it from %appData%/.minecraft/saves and paste it in the mesh_to_schematic folder.
+Also, if you choose to generate an entire city, you will have to copy a minecraft world into the mesh_to_schematic folder, and rename it "city_map". To do this, you can download a minecraft map online, or, for example, generate a superflat map in Minecraft, and copy it from %appData%/.minecraft/saves and paste it in the mesh_to_schematic folder.
 
 To make sure everything goes succesfully, you shouldn't use your computer while the program is running. If the program crashes, or you wish to stop it, you can just close it.
 When you decide to start it again, it will continue from where it last left off. If you wish to, for example, begin generating the city from the start, delete current_generation_coords.txt from the settings folder. 
@@ -20,6 +20,7 @@ When you decide to start it again, it will continue from where it last left off.
 If you chose to generate a single minecraft .schematic, the .schematic file will be saved in the the "result" folder.
 If you chose to generate an entire city, the world will be visible in the city_map minecraft world once the program has ran.
 
+The program will generate the world for Minecraft Java. If you want to use the world in bedrock, you have to convert the world, using, for example, MCCToolsChest
 
 Technical details:
 The Vendor folder contains 3rd party scripts and programs that are necessary for the program to operate. 
