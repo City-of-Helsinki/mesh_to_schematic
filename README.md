@@ -29,5 +29,3 @@ MagicaVoxel: https://ephtracy.github.io/, a Voxel file editor
 CloudCompare: http://www.cloudcompare.org/, an open source point cloud and mesh processing software
 FileToVox: https://github.com/Zarbuz/FileToVox, an open source program used to convert point clouds and 3D meshes into voxel files. The FileToVox folder contains a NOTICE.txt file that describes the changes that have been made to that program.
 McThings(vox2schematic) and it's dependencies: https://github.com/Voxelers/mcthings A python programming framework for building a 3D World of Scenes in Minecraft. A NOTICE.txt file in the python_scripts details the changes that have been made to the scripts
-
-The pipeline:
