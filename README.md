@@ -1,4 +1,5 @@
 This has been created mainly to generate colored Minecraft models from 3D city mesh models (By default the default settings and scripts make it easiest to generate minecraft worlds from Helsinki's 3D mesh datasets), importing them to a minecraft world. It can also create singular minecraft .schematic files.
+It was used to create the first 1:1 scale Minecraft full city model based on 3D reality city models https://hri.fi/data/dataset/helsingin-3d-kaupunkimalli/resource/9e0d34a8-b0ed-46a0-889a-dadf40299406
 
 Installing:
 1. Download mesh_to_schematic from github and unpack the .zip file. You can also use a git client to clone it.
