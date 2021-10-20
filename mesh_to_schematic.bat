@@ -1,5 +1,8 @@
 @echo off
 TITLE mesh_to_schematic
+echo ===========================================
+echo script created by Pietari Niinimäki - www.pietariniinimaki.com
+echo ===========================================
 ::Get path to a mesh as an argument (This means that you have to call mesh_to_schematic.bat [C:/path/to/your/mesh.obj])
 set i_obj=%1
 set vendor_path=%~dp0vendor\
