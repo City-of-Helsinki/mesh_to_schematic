@@ -22,7 +22,7 @@ When you decide to start it again, it will continue from where it last left off.
 If you chose to generate a single minecraft .schematic, the .schematic file will be saved in the the "result" folder.
 If you chose to generate an entire city, the world will be visible in the city_map minecraft world once the program has ran.
 
-The program will generate the world for Minecraft Java. If you want to use the world in bedrock, you have to convert the world, using, for example, MCCToolsChest
+The program has been tested for Minecraft Java. If city_map is a Minecraft Bedrock world, the city generation will probably still work. If you want to generate a world for both Minecraf versions, it's recommended to convert the world using, for example, MCCToolsChest
 
 Technical details:
 The Vendor folder contains 3rd party scripts and programs that are necessary for the program to operate. 
