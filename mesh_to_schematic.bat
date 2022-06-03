@@ -78,7 +78,7 @@ if not exist "%~dp0TMP_outputfiles/point_cloud_output_WIP.ply" (
 	goto wait0
 )
 ::Crop out all water (assuming water is below 0.1 units in the up direction)
-"%i_cloudCompare%" -SILENT -AUTO_SAVE OFF -o  "%~dp0TMP_outputfiles/point_cloud_output_WIP.ply" -CROP 0:0:1.2:999999:999999:10000 -C_EXPORT_FMT PLY -NO_TIMESTAMP -SAVE_CLOUDS FILE "%~dp0TMP_outputfiles/point_cloud_output.ply"
+"%i_cloudCompare%" -SILENT -AUTO_SAVE OFF -o  "%~dp0TMP_outputfiles/point_cloud_output_WIP.ply" -CROP -999999:-999999:1.2:999999:999999:10000 -C_EXPORT_FMT PLY -NO_TIMESTAMP -SAVE_CLOUDS FILE "%~dp0TMP_outputfiles/point_cloud_output.ply"
 set waited_yet=false
 :wait
 if not exist "%~dp0TMP_outputfiles/point_cloud_output.ply" (
@@ -92,7 +92,7 @@ if not exist "%~dp0TMP_outputfiles/point_cloud_output.ply" (
 	goto wait
 )
 ::Try cropping out all the land, so only the water surface remains, and move it down one meter (based on the default setting of the transformation_matrix.txt)
-"%i_cloudCompare%" -SILENT -AUTO_SAVE OFF -o  "%~dp0TMP_outputfiles/point_cloud_output_WIP.ply" -CROP 0:0:-10:999999:999999:1.2 -APPLY_TRANS "%~dp0settings/transformation_matrix2.txt"  -C_EXPORT_FMT PLY -NO_TIMESTAMP -SAVE_CLOUDS FILE "%~dp0TMP_outputfiles/point_cloud_output_WIP2.ply"
+"%i_cloudCompare%" -SILENT -AUTO_SAVE OFF -o  "%~dp0TMP_outputfiles/point_cloud_output_WIP.ply" -CROP -999999:-999999:-10:999999:999999:1.2 -APPLY_TRANS "%~dp0settings/transformation_matrix2.txt"  -C_EXPORT_FMT PLY -NO_TIMESTAMP -SAVE_CLOUDS FILE "%~dp0TMP_outputfiles/point_cloud_output_WIP2.ply"
 ::If the resulting file is empty, e.g. there is no water surface, move on
 set waited_yet=false
 :wait1
@@ -111,7 +111,8 @@ echo separating coastline
 "%i_cloudCompare%" -SILENT -AUTO_SAVE OFF -o "%~dp0TMP_outputfiles/point_cloud_output_WIP2.ply" -o "%~dp0TMP_outputfiles/point_cloud_output_WIP.ply" -MERGE_CLOUDS -C_EXPORT_FMT PLY -NO_TIMESTAMP -SAVE_CLOUDS FILE "%~dp0TMP_outputfiles/point_cloud_output.ply"
 
 :skipcoast
-
+echo adjusting point cloud contrast
+python %~dp0cloud_brightness.py "%~dp0TMP_outputfiles/point_cloud_output.ply"
 echo point cloud located!
 timeout 1 > NUL
 ::Converting point cloud to a vox file
@@ -136,8 +137,8 @@ set waited_yet=false
 ::If possible, include the origin y coordinate in the result schematic name, as this is required by the python script that imports each tile to minecraft.
 for %%f in ("%~dp0result\*") do ( 
 for %%r in ("%%f") do (
-for /f "tokens=1,2 delims=-" %%a in ("%%~nr") do (
-if %%a-%%b-ORIGIN_Y==%2 (
+for /f "tokens=1,2 delims=_" %%a in ("%%~nr") do (
+if %%a_%%b_ORIGINY==%2 (
 set output_name=%%~nr
 goto continue
 )
@@ -147,6 +148,7 @@ goto continue
 timeout 2 > NUL
 	echo "Done"
 	if %waited_yet%==true (
+		echo "going to beginning"
 		goto beginning
 	)
 	set waited_yet=true

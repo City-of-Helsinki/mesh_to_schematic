@@ -9,7 +9,7 @@ def schematics_to_world():
     schematics = []
     #Goes throuhg every .schematic in the result folder, and adds them to the city_map minecraft world at the coordinates specified in the filenames
     for filename in os.listdir(baseFolder + "result"): 
-        parsed_filename = filename.split(".")[0].split("-")
+        parsed_filename = filename.split(".")[0].split("_")
         if (len(parsed_filename) < 2):
             continue
         x = int(parsed_filename[1])*-250

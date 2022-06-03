@@ -1,3 +1,9 @@
+Quite hardcoded and has undocumented parts, but works for a city model that has a similar data structure as Helsinki's 2017 reality model.
+
+Main changes in principle are:
+city_miniature_loader and generate_city_model are scripts borrowed from Helsinki3D-cityloader, which help with downloading the 2017 realitymodel data, which is cut into many small pieces. The program searches for every small division of each 250m x 250m area of the city models, and merges them before converting them into a pointcloud. The point clouds' colours are processed using meshlab, before converting into a schematic file. 
+
+
 This has been created mainly to generate colored Minecraft models from 3D city mesh models (By default the default settings and scripts make it easiest to generate minecraft worlds from Helsinki's 3D mesh datasets), importing them to a minecraft world. It can also create singular minecraft .schematic files.
 
 It was used to create the first 1:1 scale Minecraft full city model based on 3D reality city models: https://hri.fi/data/dataset/helsingin-3d-kaupunkimalli/resource/9e0d34a8-b0ed-46a0-889a-dadf40299406

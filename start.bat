@@ -9,7 +9,7 @@ set /p inputtext="Do you want to generate an entire city? y/n "
 
 IF "%inputtext%"=="y" (
 
-	python %~dp0load_2kmx2km_tiles.py
+	python %~dp02k.py
 ) ELSE (
 
 	IF "%inputtext%"=="n" (

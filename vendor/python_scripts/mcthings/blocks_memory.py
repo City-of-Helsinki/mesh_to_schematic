@@ -238,4 +238,4 @@ class BlocksMemory:
 
         init_pos, end_pos = self.find_init_end_pos()
         
-        build_schematic_nbt(init_pos, end_pos, memory_data=self).write_file(file_path.replace("ORIGIN_Y",str(init_pos.y)))
+        build_schematic_nbt(init_pos, end_pos, memory_data=self).write_file(file_path.replace("ORIGINY",str(init_pos.y)))

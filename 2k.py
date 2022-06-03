@@ -5,6 +5,7 @@ import subprocess
 import requests
 import zipfile
 from generate_area import gen2km
+from city_miniature_loader import loadtile
 import shutil
 print("By default this program will start generating the city model starting from the coordinates specified in settings/current_generation_coords.txt [X,Y].\nThis means that if the program crashes, the next time you run it, the program will continue from where it left off. However, if you wish to start generating the whole city from the origin, delete current_generation_coords.txt\n")
 
@@ -14,31 +15,11 @@ print("This program can overwrite existing creations in your chosen minecraft wo
 
 data_set_url = input("Enter the URL that contains 2kmx2km tiles (for example: http://3d.hel.ninja/data/mesh/Helsinki3D-MESH_2015_OBJ_2km-250m_ZIP/): ")
 
-#Used mainly for debugging colors, not in use currently
-def debug():
-    src_tile = '672496x2'
-    end_tile = '686514x2'
-
-    src_tile_int = int(src_tile[:-2])
-    end_tile_int = int(end_tile[:-2])
-
-    diff = end_tile_int - src_tile_int
-
-    xdiff = int(int(str(diff)[3:])/2+1)
-    ydiff = int(int(str(diff)[:-3])/2+1)
-
-    for y in range(ydiff):
-        for x in range(xdiff):
-            current_tile_name = str(src_tile_int + 2000*y + 2*x)+"x2"
-            url = data_set_url + "Helsinki3D_OBJ_"+current_tile_name+".zip"
-            pathToTile = os.path.realpath(__file__) + '/../src_3D_files/' + current_tile_name
-            
-            gen2km(pathToTile, x*8, y*8) #2km x 2km consists of 8*8 250m x 250m tiles
-            print("2km x 2km tile processed, removing TMP files and moving to next.")
-
 def main():
+    originx = 25490000
+    originy = 6668000
     #Bottom left (Southwest) corner of the city area you want to bring to minecraft
-    src_tile = '668490x2'
+    src_tile = '666488x2'
     #Top right (Northeast) corner of the city area you want to bring to minecraft
     end_tile = '686514x2'
 
@@ -79,23 +60,29 @@ def main():
             f.truncate(0)
             f.write(str(x) + ","+str(y))
             f.close()
-            
+            tmppath = os.path.realpath(__file__) + '/../3dtmp/'
+            if os.path.isdir(tmppath):
+                shutil.rmtree(tmppath)
             #Download a single 2km x 2km tile from dataset
             current_tile_name = str(src_tile_int + 2000*y + 2*x)+"x2"
-            url = data_set_url + "Helsinki3D_OBJ_"+current_tile_name+".zip"
-            print("Downloading "+url)
-            r = requests.get(url, allow_redirects=True)
-            pathToTile = os.path.realpath(__file__) + '/../src_3D_files/' + current_tile_name
-            open(pathToTile +'.zip', 'wb').write(r.content)
+            url = data_set_url + "Helsinki3D_2017_OBJ_"+current_tile_name+".zip"
+            for x2 in range(0,8):
+                for y2 in range(0,8):
+                    loadtile(originx+xstartoffset*2000+x2*250+(x-xstartoffset)*2000,originy+ystartoffset*2000+y2*250+(y-ystartoffset)*2000,250,250,tmppath,os.path.realpath(__file__) + '/../src_3D_tile/',os.path.realpath(__file__) + '/../src_3D_files/tileX'+str(x2)+"Y"+str(y2)+".obj")
+            #print("Downloading "+url)
+            #r = requests.get(url, allow_redirects=True)
+            pathToTile = os.path.realpath(__file__) + '\\..\\src_3D_files\\'# + current_tile_name
+            
+            #open(pathToTile +'.zip', 'wb').write(r.content)
             #Check if download is successfull
 
             #If download is not successfull, move on to next tile
-            if not zipfile.is_zipfile(pathToTile+'.zip'):
-                continue
-            if not os.path.exists(pathToTile):
-                os.mkdir(pathToTile)
-            with zipfile.ZipFile(pathToTile+'.zip', 'r') as zip_ref:
-                zip_ref.extractall(pathToTile)
+            #if not zipfile.is_zipfile(pathToTile+'.zip'):
+            #    continue
+            #if not os.path.exists(pathToTile):
+            #    os.mkdir(pathToTile)
+            #with zipfile.ZipFile(pathToTile+'.zip', 'r') as zip_ref:
+            #    zip_ref.extractall(pathToTile)
             
             #Call function from another python file, that generates the 2km x 2km tile to minecraft .schematic files, and adds them to the city_map minecraft world
             gen2km(pathToTile, x*8, y*8) #2km x 2km consists of 8*8 250m x 250m tiles
@@ -109,6 +96,7 @@ def main():
                     print("Error: %s - %s." % (e.filename, e.strerror))
             if os.path.exists(pathToTile+'.zip'):
                 os.remove(pathToTile+'.zip')
+            os.mkdir(pathToTile)
         xstartoffset = 0
     if os.path.exists(os.path.realpath(__file__) + "/../settings/current_generation_coords.txt"):
         os.remove(os.path.realpath(__file__) + "/../settings/current_generation_coords.txt")
